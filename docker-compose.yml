@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  dev:
+    tty: true
+    build:
+      context: ./
+      dockerfile: Dockerfile-dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/sharks
