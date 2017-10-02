@@ -1,8 +1,8 @@
 'use strict';
 
-const logger = require('../../../logger');
+const logger = require('../../logger');
 const request = require('request-promise-native');
-const config = require('../../../config');
+const config = require('../../config');
 
 /**
  * @param  {String}   query The query object of the request
@@ -22,7 +22,7 @@ const getSharkLocations = ({ sharkId, species, fromDate, toDate }) => {
 
   const uri = `${config.ocearch.url}/filter-sharks`;
 
-  logger.info({
+  logger.debug({
     message: 'get shark locations request',
     uri,
     qs,
@@ -30,7 +30,7 @@ const getSharkLocations = ({ sharkId, species, fromDate, toDate }) => {
 
   return request.get(uri, { json: true, qs })
     .then((res) => {
-      logger.info({
+      logger.debug({
         message: 'get shark locations response',
         res,
       });

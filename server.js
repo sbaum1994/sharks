@@ -6,14 +6,14 @@ const path = require('path');
 const logger = require('./logger');
 
 const options = {
-  relativeTo: path.join(process.cwd(), '/api'),
+  relativeTo: path.join(process.cwd(), '/app/register'),
 };
 
-Glue.compose(config.manifest, options, (compErr, server) => {
-  if (compErr) throw compErr;
+Glue.compose(config.manifest, options, (err, server) => {
+  if (err) throw err;
 
-  server.start((servErr) => {
-    if (servErr) throw servErr;
-    logger.info(`Server [env=${process.env.NODE_ENV}] running at: ${server.info.uri}`);
+  server.start((err) => {
+    if (err) throw err;
+    logger.info(`Server ${process.env.NODE_ENV} running on: ${server.info.uri}`);
   });
 });

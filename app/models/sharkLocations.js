@@ -5,6 +5,8 @@ const joi = require('joi');
 const location = joi.object({
   latitude: joi.string().required().example('39.90747'),
   longitude: joi.string().required().example('-72.61677'),
+  country: joi.string().optional().example('United States'),
+  countryCode: joi.string().optional().example('US'),
   dateTime: joi.date().iso().required()
     .example('2017-09-27T07:57:20Z')
     .description('Timestamp in ISO format, UTC'),

@@ -2,8 +2,8 @@
 
 const joi = require('joi');
 
-const sharkLocations = require('../handlers/models/sharkLocations');
-const errorModel = require('../handlers/models/error');
+const sharkLocations = require('../models/sharkLocations');
+const errorModel = require('../models/error');
 const handler = require('../handlers/get-shark-locations');
 
 module.exports.register = (server, options, next) => {

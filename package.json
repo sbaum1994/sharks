@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "mon": "nodemon",
+    "watch": "nodemon",
+    "watch-windows": "nodemon --legacy-watch",
     "lint": "eslint --ignore-path .gitignore",
     "test": "NODE_ENV=test cucumber-js --format progress"
   },

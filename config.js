@@ -7,12 +7,16 @@ config.development = {
   ocearch: {
     url: 'http://www.ocearch.org/tracker/ajax',
   },
+  google: {
+    host: 'https://maps.googleapis.com/maps/api',
+    apiKey: 'AIzaSyBzeZhQjhyGfKnU4vHpJrFu1oyRisVUFoE',
+  },
   cache: false,
   manifest: {
     connections: [
       {
         routes: { cors: true },
-        port: process.env.PORT | 3000,
+        port: process.env.PORT | 3030,
       },
     ],
     registrations: [
@@ -20,8 +24,8 @@ config.development = {
       { plugin: 'inert' },
       { plugin: 'hapi-swagger' },
       { plugin: 'blipp' },
-      { plugin: './routes/pulse' },
-      { plugin: './routes/get-shark-locations' },
+      { plugin: './pulse' },
+      { plugin: './get-shark-locations' },
 
     ],
   }

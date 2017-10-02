@@ -6,6 +6,8 @@ const parsePingDate = raw => moment(raw, 'D MMM YYYY H:mm:ss ZZ').format();
 
 const parseTagDate = raw => moment(raw, 'D MMM YYYY').format();
 
+// if ping in the last month active = true; 
+
 const sharkLocation = (raw) => {
   const locations = raw.pings.map(ping => ({
     latitude: ping.latitude,
