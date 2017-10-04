@@ -19,6 +19,7 @@
   "homepage": "https://github.com/sbaum1994/sharks#readme",
   "dependencies": {
     "blipp": "^2.3.0",
+    "bluebird": "^3.5.1",
     "boom": "https://registry.npmjs.org/boom/-/boom-4.3.1.tgz",
     "bunyan": "^1.8.12",
     "glue": "^4.1.0",
@@ -26,7 +27,7 @@
     "joi": "^10.4.1",
     "moment": "https://registry.npmjs.org/moment/-/moment-2.18.1.tgz",
     "request": "https://registry.npmjs.org/request/-/request-2.75.0.tgz",
-    "request-promise-native": "^1.0.4"
+    "request-promise": "^4.2.2"
   },
   "devDependencies": {
     "chai": "^4.1.0",
