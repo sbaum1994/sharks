@@ -2,27 +2,26 @@
 
 const joi = require('joi');
 
-const sharkLocations = require('../models/sharkLocations');
+// const sharkDetails = require('../models/sharkDetails');
 const errorModel = require('../models/error');
-const handler = require('../handlers/get-shark-locations');
+const handler = require('../handlers/get-detailed');
 
 module.exports.register = (server, options, next) => {
   server.route({
-    path: '/shark-locations',
+    path: '/sharks/{sharkId}',
     method: 'GET',
     config: {
       handler: handler,
       response: {
-        schema: sharkLocations,
+        schema: joi.object({}).unknown(),
       },
-      description: 'Get shark locations given a set of filters. ' +
-        'No from and to date will only return the most recent location.',
+      description: 'Get shark details starting from their original tag date.',
       plugins: {
         'hapi-swagger': {
           responses: {
             200: {
               description: 'Success',
-              schema: sharkLocations,
+              schema: joi.object({}).unknown(),
             },
             400: {
               description: 'Bad Request',
@@ -36,11 +35,12 @@ module.exports.register = (server, options, next) => {
         },
       },
       validate: {
-        query: joi.object({
-          sharkId: joi.string().description('Filter results by shark ID.'),
-          fromDate: joi.date().iso().description('Filter results by from date.'),
-          toDate: joi.date().iso().description('Filter results by to date.'),
-        }).and('fromDate', 'toDate'),
+        params: {
+          sharkId: joi.number().integer(),
+        },
+        query: {
+          include: joi.string().description('Comma deliminated string, options: country, ocean'),
+        },
       },
       tags: ['api'],
     },
@@ -50,5 +50,5 @@ module.exports.register = (server, options, next) => {
 };
 
 module.exports.register.attributes = {
-  name: 'get-shark-locations',
+  name: 'get-detailed',
 };

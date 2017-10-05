@@ -4,19 +4,19 @@ const joi = require('joi');
 
 const sharkLocations = require('../models/sharkLocations');
 const errorModel = require('../models/error');
-const handler = require('../handlers/get-shark-locations');
+const handler = require('../handlers/get-recent');
 
 module.exports.register = (server, options, next) => {
   server.route({
-    path: '/shark-locations',
+    path: '/shark-locations-recent',
     method: 'GET',
     config: {
       handler: handler,
       response: {
         schema: sharkLocations,
       },
-      description: 'Get shark locations given a set of filters. ' +
-        'No from and to date will only return the most recent location.',
+      description: 'Get shark locations given a set of filters within the last month. ' + 
+        'Includes a few more detailed computed statistics such as nearest country and ocean.',
       plugins: {
         'hapi-swagger': {
           responses: {
@@ -36,11 +36,9 @@ module.exports.register = (server, options, next) => {
         },
       },
       validate: {
-        query: joi.object({
+        query: {
           sharkId: joi.string().description('Filter results by shark ID.'),
-          fromDate: joi.date().iso().description('Filter results by from date.'),
-          toDate: joi.date().iso().description('Filter results by to date.'),
-        }).and('fromDate', 'toDate'),
+        },
       },
       tags: ['api'],
     },
@@ -50,5 +48,5 @@ module.exports.register = (server, options, next) => {
 };
 
 module.exports.register.attributes = {
-  name: 'get-shark-locations',
+  name: 'get-recent',
 };

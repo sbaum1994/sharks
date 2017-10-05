@@ -7,9 +7,18 @@ config.development = {
   ocearch: {
     url: 'http://www.ocearch.org/tracker/ajax',
   },
+  geonames: {
+    host: 'http://api.geonames.org',
+    username: 'sbaum',
+  },
   google: {
     host: 'https://maps.googleapis.com/maps/api',
-    apiKey: 'AIzaSyBzeZhQjhyGfKnU4vHpJrFu1oyRisVUFoE',
+    geocode: {
+      apiKey: 'AIzaSyB9v8siVtJtLHw5Oed7HdlMjaxxdG0i7Kw'
+    },
+    place: {
+      apiKey: 'AIzaSyBXgv7zclbdnybtEtHMFfRiXR4Tb_MtA2Q',
+    }
   },
   cache: false,
   manifest: {
@@ -26,7 +35,8 @@ config.development = {
       { plugin: 'blipp' },
       { plugin: './pulse' },
       { plugin: './get-shark-locations' },
-
+      { plugin: './get-recent' },
+      { plugin: './get-detailed' }
     ],
   }
 }

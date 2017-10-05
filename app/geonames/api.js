@@ -11,68 +11,66 @@ const boom = require('boom');
  * @return {Promise}  The response object wrapped in a promise
  */
 const getCountry = (latitude, longitude) => {
-  const uri = `${config.google.host}/geocode/json`;
+  const uri = `${config.geonames.host}/countrySubdivisionJSON`;
 
   const qs = {
-    latlng: `${latitude},${longitude}`,
-    key: config.google.geocode.apiKey,
-    result_type: 'country',
+    lat: latitude,
+    lng: longitude,
+    username: config.geonames.username,
+    radius: 100,
   };
 
   return request(uri, { qs, json: true }).then((res) => {
     logger.debug({
-      message: 'google reverse geocode lookup',
+      message: 'geoname country lookup',
       uri,
       qs,
       res,
     });
-
-    if (res.results.length < 1) {
-      throw boom.notFound();
-    } else if (res.results[0].address_components.length < 1) {
+    
+    if (!res.countryCode || !res.countryName) {
       throw boom.notFound();
     }
 
     return {
-      long: res.results[0].address_components[0].long_name,
-      short: res.results[0].address_components[0].short_name,
+      countryCode: res.countryCode,
+      countryName: res.countryName,
     };
   });
-}
+};
 
 /**
  * @param  {String}   latitude latitude of the reverse lookup
  * @param  {String}   longitude longitude of the reverse lookup
- * @return {Promise}  The response object wrapped in a promise (hopefully a location)
+ * @return {Promise}  The response object wrapped in a promise
  */
-const getNearbyLocation = (latitude, longitude) => {
-  const uri = `${config.google.host}/place/nearbysearch/json`;
+const getOcean = (latitude, longitude) => {
+  const uri = `${config.geonames.host}/oceanJSON`;
 
   const qs = {
-    location: `${latitude},${longitude}`,
-    radius: 50000,
-    key: config.google.place.apiKey,
+    lat: latitude,
+    lng: longitude,
+    username: config.geonames.username,
   };
 
   return request(uri, { qs, json: true }).then((res) => {
     logger.debug({
-      message: 'google nearby search',
+      message: 'geoname ocean lookup',
       uri,
       qs,
       res,
     });
 
-    if (res.results.length < 1) {
+    if (!res.ocean) {
       throw boom.notFound();
     }
 
-    return res.results[0];
+    return res.ocean.name;
   });
-}
-
-module.exports = {
-  getCountry,
-  getNearbyLocation,
 };
 
 
+module.exports = {
+  getCountry,
+  getOcean,
+};
